@@ -1,20 +1,31 @@
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import http from "@/utils/request.js";
+import router from "@/router/index.js";
 const collapsed = ref(false);
-const selectedKeys = ref(['1']);
+const selectedKeys = ref(['3']);
 
 const options = {
   '0': 'ERROR',
   '1': '分配单号',
   '2': '快递入库',
-  '3': '衣物',
-  '4': '数码产品',
-  '5': '药品',
-  '6': '生鲜',
-  '7': '易碎品',
-  '8': '其他',
+  '3': '快递取出',
 }
+const links = {
+  '0': 'noFound',
+  '1': 'main',
+  '2': 'upload',
+  '3': 'find',
+}
+
+onMounted(()=>{
+  router.push(`/${links[selectedKeys.value]}`)
+})
+
+watch(selectedKeys, (newValue, oldValue) => {
+  // console.log(selectedKeys.value)
+  router.push(`/${links[selectedKeys.value]}`)
+})
 
 </script>
 
@@ -35,10 +46,6 @@ const options = {
         <a-menu-item key="3">
           <desktop-outlined />
           <span>{{ options['3'] }}</span>
-        </a-menu-item>
-        <a-menu-item key="4">
-          <desktop-outlined />
-          <span>{{ options['4'] }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>

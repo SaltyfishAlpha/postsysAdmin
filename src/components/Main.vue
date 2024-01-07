@@ -128,7 +128,7 @@ const handleOk = () => {
 };
 
 const handleCancel = () => {
-  const currentNum = ref('')
+  currentNum.value = ''
   open.value = false;
 };
 
@@ -168,7 +168,6 @@ const datas = computed(()=>{
 </script>
 
 <template>
-  <a->
   <a-table
       :columns="columns"
       :data-source="datas"
