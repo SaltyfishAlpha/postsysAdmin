@@ -1,0 +1,25 @@
+{
+  "name": "postsys-admin",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "ant-design-vue": "^4.0.8",
+    "vue": "^3.4.5",
+    "axios": "^1.6.3",
+    "vue-router" : "^4.2.5",
+    "qs" : "^6.11.2",
+    "vue-request": "^2.0.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.2",
+    "vite": "^5.0.10",
+    "mockjs": "^1.1.0"
+  }
+}
