@@ -88,7 +88,7 @@ const loading = ref(false)
 const take_object = (tracing_num, receiver_phone) => {
   console.log({tracing_num: tracing_num, receiver_phone: receiver_phone})
   loading.value = true
-  http.get('/remove', {params:{tracing_num: tracing_num, receiver_phone: receiver_phone}}).then((res) => {
+  http.post('/remove', {tracing_num: tracing_num, receiver_phone: receiver_phone}).then((res) => {
     console.log(res.data)
     if(res.data.code === 200)
       lists.value = lists.value.filter(item => item.tracing_num !== tracing_num)
