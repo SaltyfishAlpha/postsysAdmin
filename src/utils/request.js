@@ -4,8 +4,7 @@ const http = axios.create({
     baseURL: '/api',
     timeout:5000, //超时时长
     headers: {
-        "Content-Type" : "multipart/form-data",
-        //"Content-Type" : "application/json"
+        'Content-Type' : 'multipart/form-data',
     }
 })
 

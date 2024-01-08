@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import http from "@/utils/request";
 import myEnum from "@/main";
 import {usePagination, useRequest} from "vue-request";
@@ -103,11 +103,21 @@ const testData = [
   },
 ];
 
-const {
-  data: dataSource,
-  run,
-  loading,
-} = useRequest(()=>{http.get('/getinfo').then((res)=>{ console.log(res.data) })})
+// const {
+//   data: dataSource,
+//   run,
+//   loading,
+// } = usePagination(()=>{http.get('/getinfo')})
+const loading = ref(false)
+const dataSource = ref([])
+const getItems = ()=>{
+  http.get('/getinfo').then((res)=>{
+    dataSource.value = res.data.data
+  })
+}
+onMounted(()=>{
+  getItems()
+})
 
 const currentNum = ref('')
 const trace_num = ref('')
@@ -119,11 +129,11 @@ const editTrace = function(num) {
 const handleOk = () => {
   console.log({sender_id: currentNum.value, tracing_num: trace_num.value})
   loading.value = true
-  // axios.post('/updateinfo', {sender_id: currentNum.value, tracing_num: trace_num.value}).then(()=>{
-  http.post('/updateinfo', {sender_id: '124124124413551241', tracing_num: trace_num.value}).then(()=>{
+  http.post('/updateinfo', {sender_id: currentNum.value, tracing_num: trace_num.value}).then(()=>{
+  //http.post('/updateinfo', {sender_id: '124124124413551241', tracing_num: trace_num.value}).then(()=>{
     console.log('success')
     open.value = false
-    run()
+    getItems()
   }).catch(err=>console.log(err))
 };
 
@@ -161,16 +171,13 @@ http.interceptors.response.use(
       return Promise.reject(error);
     }
 );
-const datas = computed(()=>{
-  console.log(dataSource.value)
-  return [dataSource]
-})
+
 </script>
 
 <template>
   <a-table
       :columns="columns"
-      :data-source="datas"
+      :data-source="dataSource"
       :scroll="{ x: 1500 }"
       :loading="loading"
       @change="handleChange"

@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import http from "@/utils/request";
 import myEnum from "@/main";
 import {usePagination, useRequest} from "vue-request";
@@ -83,28 +83,40 @@ const testData = [
   },
 ];
 
-const {
-  data: dataSource,
-  run,
-  loading,
-} = useRequest(()=>{http.get('/allocate').then(()=>{ console.log('update') })})
+// const {
+//   data: dataSource,
+//   run,
+//   loading,
+// } = useRequest(()=>{http.get('/allocate').then(()=>{ console.log('update') })})
+const dataSource = ref([])
+const loading = ref(false)
+const getItems = () => {
+  http.get('/allocate').then((res) => {
+    console.log("res.data.data")
+    console.log(res.data.data)
+    dataSource.value = res.data.data
+  })
+}
+onMounted(()=>{
+  getItems()
+})
 
 const currentNum = ref('')
 const my_shelf_num = ref('')
 const open = ref(false)
-const editTrace = function(num) {
+const editTrace = function (num) {
   currentNum.value = num
   open.value = true
 }
 const handleOk = () => {
   // console.log({tracing_num: currentNum.value, shelf_num: my_shelf_num.value})
   loading.value = true
-  http.post('/allocated', {tracing_num: currentNum.value, shelf_num: my_shelf_num.value}).then((res)=>{
-  // http.post('/allocated', {tracing_num: '124124124413551241', shelf_num: my_shelf_num.value}).then((res)=>{
+  http.post('/allocated', {tracing_num: currentNum.value, shelf_num: my_shelf_num.value}).then((res) => {
+    // http.post('/allocated', {tracing_num: '124124124413551241', shelf_num: my_shelf_num.value}).then((res)=>{
     console.log(res.data)
     open.value = false
-    run()
-  }).catch(err=>console.log(err))
+    getItems()
+  }).catch(err => console.log(err))
 };
 
 const handleCancel = () => {
@@ -115,7 +127,7 @@ const handleCancel = () => {
 const handleChange = () => {
   //TODO
   console.log('change')
-  run()
+  getItems()
 }
 
 //添加请求拦截器
@@ -142,10 +154,9 @@ http.interceptors.response.use(
     }
 );
 
-const datas = computed(()=>{
-  console.log(dataSource.value)
-  return [dataSource].filter(item=>item.sender_id !== '')
-})
+/////////////////////
+//     POST       //
+////////////////////
 
 const visible_data = ref(false)
 const postdata = ref({
@@ -163,17 +174,17 @@ const showForm = () => {
 const datahandleOk = () => {
   console.log(postdata.value)
   loading.value = true
-  http.post('/upload', postdata).then((res)=>{
+  http.post('/upload', postdata).then((res) => {
     console.log(res.data)
     visible_data.value = false
     run()
-  }).catch(err=>console.log(err))
+  }).catch(err => console.log(err))
 };
 const datahandleCancel = () => {
   visible_data.value = false;
 };
 //for test
-watch(postdata, (n,o)=>{
+watch(postdata, (n, o) => {
   console.log(postdata.value)
 })
 </script>
@@ -224,7 +235,7 @@ watch(postdata, (n,o)=>{
           label="货架号"
           :rules="[{ required: true, message: '请输入货架号' }]"
       >
-        <a-input v-model:value="my_shelf_num" />
+        <a-input v-model:value="my_shelf_num"/>
       </a-form-item>
     </a-form>
   </a-modal>
@@ -241,7 +252,7 @@ watch(postdata, (n,o)=>{
           :rules="[{ required: true, message: '请输入' }]"
           :span="24"
       >
-        <a-input v-model:checked="postdata.company" />
+        <a-input v-model:checked="postdata.company"/>
       </a-form-item>
       <a-form-item
           label="是否到付"
@@ -259,7 +270,7 @@ watch(postdata, (n,o)=>{
           label="单号"
           :rules="[{ required: true, message: '请输入' }]"
       >
-        <a-input v-model:checked="postdata.tracing_num" />
+        <a-input v-model:checked="postdata.tracing_num"/>
       </a-form-item>
       <a-form-item
           label="registered"
@@ -271,7 +282,7 @@ watch(postdata, (n,o)=>{
           label="收件人手机号"
           :rules="[{ required: true, message: '请输入' }]"
       >
-        <a-input v-model:checked="postdata.receiver_phone" />
+        <a-input v-model:checked="postdata.receiver_phone"/>
       </a-form-item>
       <a-form-item
           label="rejected"
