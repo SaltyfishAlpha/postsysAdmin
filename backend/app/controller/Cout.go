@@ -16,8 +16,8 @@ func QueryMine (c echo.Context) (err error) {
 		return response.SendResponse(c, 404, "Bind failed",)
 	}
 	exp := new(model.Express_In)
-	exp.Receiver_Phone = data.Receiver_Phone
-	err = model.DB.Debug().Where("receiver_phone = ?", exp.Receiver_Phone).First(&exp).Error
+	// exp.Receiver_Phone = data.Receiver_Phone
+	err = model.DB.Debug().Where("receiver_phone = ?", data.Receiver_Phone).First(&exp).Error
 	if err != nil {
 		return response.SendResponse(c, 200, "No express found for you")
 	}
