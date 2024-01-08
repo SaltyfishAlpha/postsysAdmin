@@ -63,14 +63,21 @@ func UpdateInfos(c echo.Context) (err error) {
 	// 	logrus.Panic(err)
 	// 	return response.SendResponse(c, 404, "query failed")
 	// }
+	fmt.Println(data.Sender_Id)
+	fmt.Println(data.Tracing_Num)
 	err = model.DB.Debug().Where("sender_id = ?", data.Sender_Id).First(&exp).Error
 	if err != nil {
 		logrus.Fatal(err)
-		fmt.Println("Update error: maybe query failed")
+		fmt.Println("Update error: maybe searching failed")
 		return response.SendResponse(c, 404, "update err")
 	}
 	exp.Tracing_Num = data.Tracing_Num
-	model.DB.Save(&exp)
+	err = model.DB.Debug().Where("sender_id = ?", data.Sender_Id).Updates(&exp).Error
+	if err != nil {
+		logrus.Fatal(err)
+		fmt.Println("Update error: Updating failed!")
+		return response.SendResponse(c, 404, "update err")
+	}
 	return response.SendResponse(c, 200, "tracing_num allocate successfully")
 
 }

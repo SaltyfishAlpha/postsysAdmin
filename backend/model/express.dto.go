@@ -3,8 +3,8 @@ package model
 type UploadApiInput struct {
 	Company     string `gorm:"type:char(50)" form:"company" json:"company"`                    // 物流公司
 	Cash_On     bool   `gorm:"type:boolean" form:"cash_on" json:"cash_on"`                     // 快递是否到付
-	Pre_Freight uint   `gorm:"type:uint;primaryKey" form:"pre_freight" json:"pre_freight"`     // 快递垫付运费
-	Tracing_Num string `gorm:"type:char(21);primaryKey" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Pre_Freight uint   `gorm:"type:uint" form:"pre_freight" json:"pre_freight"`     // 快递垫付运费
+	Tracing_Num string `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
 	Registred   bool   `gorm:"type:boolean" form:"registered" json:"registered"`
 	// 快递是否挂号信
 	Receiver_Phone string `gorm:"type:char(12)" form:"receiver_phone" json:"receiver_phone"`
@@ -23,7 +23,7 @@ type Exp_List_Return struct {
 // AllocateInput: null
 
 type AllocatedApiInput struct {
-	Tracing_Num string `gorm:"type:char(21);primaryKey" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Tracing_Num string `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
 	Shelf_Num   string `gorm:"type:char(5)" form:"shelf_num" json:"shelf_num"`                 // 货架号
 }
 
@@ -32,7 +32,7 @@ type QueryApiInput struct {
 }
 
 type RemoveApiInput struct {
-	Tracing_Num    string `gorm:"type:char(21);primaryKey" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Tracing_Num    string `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
 	Receiver_Phone string `gorm:"type:char(12)" form:"receiver_phone" json:"receiver_phone"`
 }
 
@@ -64,5 +64,5 @@ type Info_List_Return struct {
 
 type UpdateApiInput struct {
 	Sender_Id   string `gorm:"type:char(19)" form:"sender_id" json:"sender_id"`                // 寄件人身份证件号
-	Tracing_Num string `gorm:"type:char(21);primaryKey" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Tracing_Num string `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
 }

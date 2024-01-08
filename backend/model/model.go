@@ -5,8 +5,8 @@ import "time"
 type Express_In struct {
 	Company     string `gorm:"type:char(50)" form:"company" json:"company"`                    // 物流公司
 	Cash_On     bool   `gorm:"type:boolean" form:"cash_on" json:"cash_on"`                     // 快递是否到付
-	Pre_Freight uint   `gorm:"type:uint;primaryKey" form:"pre_freight" json:"pre_freight"`     // 快递垫付运费
-	Tracing_Num string `gorm:"type:char(21);primaryKey" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Pre_Freight uint   `gorm:"type:uint" form:"pre_freight" json:"pre_freight"`     // 快递垫付运费
+	Tracing_Num string `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
 	Registred   bool   `gorm:"type:boolean" form:"registered" json:"registered"`
 	// 快递是否挂号信
 	Receiver_Phone string `gorm:"type:char(12)" form:"receiver_phone" json:"receiver_phone"`
@@ -29,7 +29,7 @@ type Senders struct {
 	Parcel_Insurance bool    `gorm:"type:boolean" form:"parcel_insurance" json:"parcel_insurance"`   // 是否保价
 	Object_Value     float32 `gorm:"type:float" form:"object_value" json:"object_value"`             // 物品价值
 	Cash_On          bool    `gorm:"type:boolean" form:"cash_on" json:"cash_on"`                     // 是否到付
-	Tracing_Num      string  `gorm:"type:char(21);primaryKey" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Tracing_Num      string  `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
 }
 
 // TODO:  add new model
