@@ -65,7 +65,7 @@ func Allocated(c echo.Context) (err error) {
 		return response.SendResponse(c, 404, "find nothing")
 	}
 	exp.Shelf_Num = data.Shelf_Num
-	err = model.DB.Debug().Updates(&exp).Error
+	err = model.DB.Debug().Where("tracing_num = ?", exp.Tracing_Num).Updates(&exp).Error
 	if err != nil {
 		return response.SendResponse(c, 404, "shelf_num updating error")
 	}
