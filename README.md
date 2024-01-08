@@ -31,3 +31,14 @@ npm run build
 ### 前后端分离配置
 
 请修改`vite.config.js`中`proxy`的值
+
+
+
+### 后端运行方式
+cd到backend文件夹，请确保初始化了golang和mysql环境，安装好golang包依赖。
+后端默认运行在http://127.0.0.1:1926上，您可以在backend/app/init.go的StartServer函数中修改这一端口号。
+
+运行后端的方法为
+```bash
+cd backend && go run main.go 
+```
