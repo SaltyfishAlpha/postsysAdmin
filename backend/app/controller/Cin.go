@@ -41,8 +41,8 @@ func UploadExpress(c echo.Context) (err error) {
 func Allocate(c echo.Context) (err error) {
 	// query for "-1"
 	exp := new(model.Express_In)
-	exp.Tracing_Num = "-1"
-	err = model.DB.Where("tracing_num = ?", exp.Tracing_Num).First(&exp).Error
+	exp.Shelf_num = "-1"
+	err = model.DB.Where("shelf_num = ?", exp.Shelf_num).First(&exp).Error
 	if err != nil {
 		return response.SendResponse(c, 404, "find error")
 	}
