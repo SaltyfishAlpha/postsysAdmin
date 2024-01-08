@@ -19,7 +19,7 @@ const columns = [
     width: 100,
   },
   {
-    title: 'pre_freight',
+    title: '是否垫付运费',
     dataIndex: 'pre_freight',
     key: 'pre_freight',
     width: 100,
@@ -31,7 +31,7 @@ const columns = [
     width: 200,
   },
   {
-    title: 'registered',
+    title: '是否为挂号信',
     key: 'registered',
     dataIndex: 'registered',
     width: 100,
@@ -87,7 +87,7 @@ const {
   data: dataSource,
   run,
   loading,
-} = useRequest(()=>{axios.get('/allocate').then(()=>{ console.log('update') })})
+} = useRequest(()=>{http.get('/allocate').then(()=>{ console.log('update') })})
 
 const currentNum = ref('')
 const my_shelf_num = ref('')

@@ -2,6 +2,8 @@
 import {onMounted, ref, watch} from 'vue';
 import http from "@/utils/request.js";
 import router from "@/router/index.js";
+import { MailOutlined } from "@ant-design/icons-vue";
+
 const collapsed = ref(false);
 const selectedKeys = ref(['3']);
 
@@ -33,7 +35,7 @@ watch(selectedKeys, (newValue, oldValue) => {
   <a-layout style="min-height: 100vh">
 
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo"></div>
+      <a-flex align="center" justify="center"><div class="logo"><MailOutlined style="font-size: 25px;margin: 5px"/><p style="margin: 5px">快递管理系统</p></div></a-flex>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <a-menu-item key="1">
           <pie-chart-outlined />
@@ -68,7 +70,10 @@ watch(selectedKeys, (newValue, oldValue) => {
 .logo {
   height: 32px;
   margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 20px;
+  font-weight: 70;
+  display: flex;
 }
 
 .site-layout .site-layout-background {

@@ -107,7 +107,7 @@ const {
   data: dataSource,
   run,
   loading,
-} = useRequest(()=>{axios.get('/getinfo').then(()=>{ console.log('update') })})
+} = useRequest(()=>{http.get('/getinfo').then((res)=>{ console.log(res.data) })})
 
 const currentNum = ref('')
 const trace_num = ref('')
@@ -163,7 +163,7 @@ http.interceptors.response.use(
 );
 const datas = computed(()=>{
   console.log(dataSource.value)
-  return [dataSource].filter(item=>item.sender_id !== '')
+  return [dataSource]
 })
 </script>
 
