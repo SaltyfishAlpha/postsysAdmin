@@ -5,6 +5,7 @@ import (
 	"Express/model"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
+	"fmt"
 )
 
 // api/info
@@ -57,17 +58,19 @@ func UpdateInfos(c echo.Context) (err error) {
 	exp := new(model.Senders)
 
 	exp.Sender_Id = data.Sender_Id
+	// err = model.DB.Debug().Where("sender_id = ?", data.Sender_Id).First(&exp).Error
+	// if err != nil {
+	// 	logrus.Panic(err)
+	// 	return response.SendResponse(c, 404, "query failed")
+	// }
 	err = model.DB.Debug().Where("sender_id = ?", data.Sender_Id).First(&exp).Error
 	if err != nil {
-		logrus.Panic(err)
-		return response.SendResponse(c, 404, "query failed")
-	}
-	exp.Tracing_Num = data.Tracing_Num
-	err = model.DB.Debug().Where("sender_id = ?", data.Sender_Id).Updates(&exp).Error
-	if err != nil {
 		logrus.Fatal(err)
+		fmt.Println("Update error: maybe query failed")
 		return response.SendResponse(c, 404, "update err")
 	}
+	exp.Tracing_Num = data.Tracing_Num
+	model.DB.Save(&exp)
 	return response.SendResponse(c, 200, "tracing_num allocate successfully")
 
 }
