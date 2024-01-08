@@ -30,7 +30,7 @@ func addRoutes() {
 	api.POST("/allocated", controller.Allocated)
 
 	api.POST("/query", controller.QueryMine)
-	api.GET("/remove", controller.PickUp)
+	api.POST("/remove", controller.PickUp)
 
 	api.POST("/info", controller.BeginSend)
 	api.GET("/getinfo", controller.GetInfo)
