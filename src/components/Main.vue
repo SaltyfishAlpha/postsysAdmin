@@ -130,7 +130,6 @@ const handleOk = () => {
   console.log({sender_id: currentNum.value, tracing_num: trace_num.value})
   loading.value = true
   http.post('/updateinfo', {sender_id: currentNum.value, tracing_num: trace_num.value}).then(()=>{
-  //http.post('/updateinfo', {sender_id: '124124124413551241', tracing_num: trace_num.value}).then(()=>{
     console.log('success')
     open.value = false
     getItems()

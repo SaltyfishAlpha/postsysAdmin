@@ -55,7 +55,7 @@ const columns = [
     width: 200,
   },
   {
-    title: 'rejected',
+    title: '是否拒收',
     key: 'rejected',
     dataIndex: 'rejected',
     width: 100,
@@ -112,7 +112,6 @@ const handleOk = () => {
   // console.log({tracing_num: currentNum.value, shelf_num: my_shelf_num.value})
   loading.value = true
   http.post('/allocated', {tracing_num: currentNum.value, shelf_num: my_shelf_num.value}).then((res) => {
-    // http.post('/allocated', {tracing_num: '124124124413551241', shelf_num: my_shelf_num.value}).then((res)=>{
     console.log(res.data)
     open.value = false
     getItems()
@@ -161,12 +160,12 @@ http.interceptors.response.use(
 const visible_data = ref(false)
 const postdata = ref({
   company: "",
-  cash_on: false,
-  pre_freight: false,
+  cash_on: 0,
+  pre_freight: 0,
   tracing_num: "",
-  registered: false,
+  registered: 0,
   receiver_phone: "",
-  rejected: false,
+  rejected: 0,
 })
 const showForm = () => {
   visible_data.value = true
@@ -174,10 +173,10 @@ const showForm = () => {
 const datahandleOk = () => {
   console.log(postdata.value)
   loading.value = true
-  http.post('/upload', postdata).then((res) => {
+  http.post('/upload', postdata.value).then((res) => {
     console.log(res.data)
     visible_data.value = false
-    run()
+    getItems()
   }).catch(err => console.log(err))
 };
 const datahandleCancel = () => {
@@ -252,7 +251,7 @@ watch(postdata, (n, o) => {
           :rules="[{ required: true, message: '请输入' }]"
           :span="24"
       >
-        <a-input v-model:checked="postdata.company"/>
+        <a-input v-model:value="postdata.company"/>
       </a-form-item>
       <a-form-item
           label="是否到付"
@@ -261,7 +260,7 @@ watch(postdata, (n, o) => {
         <a-checkbox v-model:checked="postdata.cash_on"/>
       </a-form-item>
       <a-form-item
-          label="pre_freight"
+          label="是否垫付运费"
           :rules="[{ required: true, message: '请输入' }]"
       >
         <a-checkbox v-model:checked="postdata.pre_freight"/>
@@ -270,10 +269,10 @@ watch(postdata, (n, o) => {
           label="单号"
           :rules="[{ required: true, message: '请输入' }]"
       >
-        <a-input v-model:checked="postdata.tracing_num"/>
+        <a-input v-model:value="postdata.tracing_num"/>
       </a-form-item>
       <a-form-item
-          label="registered"
+          label="是否为挂号信"
           :rules="[{ required: true, message: '请输入' }]"
       >
         <a-checkbox v-model:checked="postdata.registered"/>
@@ -282,10 +281,10 @@ watch(postdata, (n, o) => {
           label="收件人手机号"
           :rules="[{ required: true, message: '请输入' }]"
       >
-        <a-input v-model:checked="postdata.receiver_phone"/>
+        <a-input v-model:value="postdata.receiver_phone"/>
       </a-form-item>
       <a-form-item
-          label="rejected"
+          label="是否拒收"
           :rules="[{ required: true, message: '请输入' }]"
       >
         <a-checkbox v-model:checked="postdata.rejected"/>

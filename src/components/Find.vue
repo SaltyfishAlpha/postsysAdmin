@@ -83,15 +83,15 @@ const testData = [
   },
 ];
 
-const lists = ref(testData)
+const lists = ref([])
 const loading = ref(false)
 const take_object = (tracing_num, receiver_phone) => {
   console.log({tracing_num: tracing_num.value, receiver_phone: receiver_phone.value})
   loading.value = true
   http.get('/remove', {tracing_num: tracing_num.value, receiver_phone: receiver_phone.value}).then((res) => {
     console.log(res.data)
-    // TODO: if(res.data.code == 200) delete
-    lists.value = lists.value.filter(item => item.tracing_num !== tracing_num)
+    if(res.data.code === 200)
+      lists.value = lists.value.filter(item => item.tracing_num !== tracing_num)
   }).catch(err => console.log(err))
 };
 
@@ -119,12 +119,6 @@ http.interceptors.response.use(
     }
 );
 
-const datas = computed(() => {
-  // if (dataSource === undefined) console.log('aaaaaaaaaaaaaa'); else console.log(dataSource);
-  // return [dataSource]
-  // console.log(lists.value)
-  return lists.value
-})
 const number = ref('')
 const onSearch = () => {
   console.log(number.value)
@@ -148,7 +142,7 @@ const onSearch = () => {
   />
   <a-table
       :columns="columns"
-      :data-source="datas"
+      :data-source="lists"
       :scroll="{ x: 1500 }"
       :loading="loading"
   >

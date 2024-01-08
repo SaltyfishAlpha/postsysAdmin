@@ -41,8 +41,8 @@ func UploadExpress(c echo.Context) (err error) {
 func Allocate(c echo.Context) (err error) {
 	// query for "-1"
 	exp := new(model.Express_In)
-	exp.Shelf_num = "-1"
-	err = model.DB.Where("shelf_num = ?", exp.Shelf_num).First(&exp).Error
+	exp.Shelf_Num = "-1"
+	err = model.DB.Where("shelf_num = ?", exp.Shelf_Num).First(&exp).Error
 	if err != nil {
 		return response.SendResponse(c, 404, "find error")
 	}
@@ -55,7 +55,7 @@ func Allocated(c echo.Context) (err error) {
 	data := new(model.AllocatedApiInput)
 	if err = c.Bind(data); err != nil {
 		logrus.Error(err)
-		return response.SendResponse(c, 404, "Bind failed", )
+		return response.SendResponse(c, 404, "Bind failed")
 	}
 	exp := new(model.Express_In)
 	exp.Tracing_Num = data.Tracing_Num
@@ -69,9 +69,6 @@ func Allocated(c echo.Context) (err error) {
 	if err != nil {
 		return response.SendResponse(c, 404, "shelf_num updating error")
 	}
-	return response.SendResponse(c, 200, "succeed", )
+	return response.SendResponse(c, 200, "succeed")
 
 }
-
-
-
