@@ -19,7 +19,7 @@ const columns = [
     width: 100,
   },
   {
-    title: 'pre_freight',
+    title: '是否垫付运费',
     dataIndex: 'pre_freight',
     key: 'pre_freight',
     width: 100,
@@ -31,7 +31,7 @@ const columns = [
     width: 200,
   },
   {
-    title: 'registered',
+    title: '是否为挂号信',
     key: 'registered',
     dataIndex: 'registered',
     width: 100,
@@ -55,7 +55,7 @@ const columns = [
     width: 200,
   },
   {
-    title: 'rejected',
+    title: '是否拒收',
     key: 'rejected',
     dataIndex: 'rejected',
     width: 100,
@@ -86,9 +86,9 @@ const testData = [
 const lists = ref([])
 const loading = ref(false)
 const take_object = (tracing_num, receiver_phone) => {
-  console.log({tracing_num: tracing_num.value, receiver_phone: receiver_phone.value})
+  console.log({tracing_num: tracing_num, receiver_phone: receiver_phone})
   loading.value = true
-  http.get('/remove', {tracing_num: tracing_num.value, receiver_phone: receiver_phone.value}).then((res) => {
+  http.get('/remove', {params:{tracing_num: tracing_num, receiver_phone: receiver_phone}}).then((res) => {
     console.log(res.data)
     if(res.data.code === 200)
       lists.value = lists.value.filter(item => item.tracing_num !== tracing_num)
@@ -122,20 +122,17 @@ http.interceptors.response.use(
 const number = ref('')
 const onSearch = () => {
   console.log(number.value)
-  http.get('/query', {
-    params: {
-      receiver_phone: number.value
-    }
-  }).then((res) => {
+  http.post('/query', { receiver_phone: number.value }).then((res) => {
     console.log(res.data)
-    lists.value.push(res.data)
+    lists.value = res.data.data
+    console.log(lists.value)
   })
 }
 </script>
 
 <template>
   <a-input-search
-      v-model:value="number.receiver_phone"
+      v-model:value="number"
       placeholder="请输入手机号"
       style="width: 200px; margin: 0px 0px 20px 0px"
       @search="onSearch"

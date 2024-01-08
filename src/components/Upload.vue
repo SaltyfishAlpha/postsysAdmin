@@ -93,8 +93,8 @@ const loading = ref(false)
 const getItems = () => {
   http.get('/allocate').then((res) => {
     console.log("res.data.data")
-    console.log(res.data.data)
-    dataSource.value = res.data.data
+    console.log(res.data.data[0])
+    dataSource.value = [res.data.data[0]]
   })
 }
 onMounted(()=>{
@@ -192,7 +192,7 @@ watch(postdata, (n, o) => {
   <a-button type="primary" style="margin: 0px 0px 20px 0px" @click="showForm">快递录入</a-button>
   <a-table
       :columns="columns"
-      :data-source="datas"
+      :data-source="dataSource"
       :scroll="{ x: 1500 }"
       :loading="loading"
       @change="handleChange"
