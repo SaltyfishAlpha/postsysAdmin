@@ -3,17 +3,17 @@ package model
 import "time"
 
 type Express_In struct {
-	Company     string `gorm:"type:char(50)" form:"company" json:"company"`                    // 物流公司
-	Cash_On     bool   `gorm:"type:boolean" form:"cash_on" json:"cash_on"`                     // 快递是否到付
-	Pre_Freight uint   `gorm:"type:uint" form:"pre_freight" json:"pre_freight"`     // 快递垫付运费
-	Tracing_Num string `gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
-	Registred   bool   `gorm:"type:boolean" form:"registered" json:"registered"`
+	Company     string 		`gorm:"type:char(50)" form:"company" json:"company"`                    // 物流公司
+	Cash_On     bool   		`gorm:"type:boolean" form:"cash_on" json:"cash_on"`                     // 快递是否到付
+	Pre_Freight bool   		`gorm:"type:boolean" form:"pre_freight" json:"pre_freight"`     // 快递垫付运费
+	Tracing_Num string 		`gorm:"type:char(21)" form:"tracing_num" json:"tracing_num"` // 快递单号
+	Registred   bool   		`gorm:"type:boolean" form:"registered" json:"registered"`
 	// 快递是否挂号信
-	Receiver_Phone string `gorm:"type:char(12)" form:"receiver_phone" json:"receiver_phone"`
+	Receiver_Phone string 	`gorm:"type:char(12)" form:"receiver_phone" json:"receiver_phone"`
 	// 收件人手机号  11位手机号，1位'\0'
-	Shelf_Num    string    `gorm:"type:char(5)" form:"shelf_num" json:"shelf_num"`   // 货架号
-	Deliver_time time.Time `gorm:"datetime" form:"deliver_time" json:"deliver_time"` // 快递入库时间
-	Rejected     bool      `gorm:"boolean" form:"rejected" json:"rejected"`          // 快递是否拒收
+	Shelf_Num    string     `gorm:"type:char(5)" form:"shelf_num" json:"shelf_num"`   // 货架号
+	Deliver_time time.Time  `gorm:"datetime" form:"deliver_time" json:"deliver_time"` // 快递入库时间
+	Rejected     bool       `gorm:"type:boolean" form:"rejected" json:"rejected"`          // 快递是否拒收
 }
 
 type Senders struct {

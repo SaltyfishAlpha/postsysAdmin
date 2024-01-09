@@ -41,8 +41,8 @@ func UploadExpress(c echo.Context) (err error) {
 func Allocate(c echo.Context) (err error) {
 	// query for "-1"
 	exp := new(model.Express_In)
-	exp.Shelf_Num = "-1"
-	err = model.DB.Where("shelf_num = ?", exp.Shelf_Num).First(&exp).Error
+	// exp.Shelf_Num = "-1"
+	err = model.DB.Where("shelf_num = ?", "-1").First(&exp).Error
 	if err != nil {
 		return response.SendResponse(c, 404, "find error")
 	}
@@ -69,6 +69,9 @@ func Allocated(c echo.Context) (err error) {
 	if err != nil {
 		return response.SendResponse(c, 404, "shelf_num updating error")
 	}
+	// 分配货架后提醒收件人领取
+	Infof("Message: express arrived at %s shelf", exp.Shelf_Num)
+
 	return response.SendResponse(c, 200, "succeed")
 
 }

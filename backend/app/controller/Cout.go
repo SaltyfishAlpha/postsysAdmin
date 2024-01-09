@@ -34,16 +34,17 @@ func PickUp (c echo.Context) (err error) {
 		return response.SendResponse(c, 404, "Bind failed",)
 	}
 	exp := new(model.Express_In)
-	exp.Tracing_Num = data.Tracing_Num
+	// exp.Tracing_Num = data.Tracing_Num
 	//exp.Receiver_Phone = data.Receiver_Phone
-	err = model.DB.Debug().Where("tracing_Num = ?", exp.Tracing_Num).First(&exp).Error
+	err = model.DB.Debug().Where("tracing_Num = ?", data.Tracing_Num).First(&exp).Error
 	if err != nil {
 		return response.SendResponse(c, 404, "No Record Found",)
 	}
 	if exp.Receiver_Phone != data.Receiver_Phone {
 		return response.SendResponse(c, 404, "Express not yours",)
 	}
-	err = model.DB.Debug().Where("tracing_num = ?", exp.Tracing_Num).Delete(&exp).Error
+	// err = model.DB.Debug().Delete(&exp).Error // .Where("tracing_num = ?", data.Tracing_Num)
+	err = model.DB.Debug().Where("tracing_num = ?", data.Tracing_Num).Delete(&exp).Error
 	if err != nil {
 		logrus.Fatal(err)
 		return response.SendResponse(c, 404, "delete (pick up) error")
