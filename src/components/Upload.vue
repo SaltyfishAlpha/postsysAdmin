@@ -93,8 +93,9 @@ const loading = ref(false)
 const getItems = () => {
   http.get('/allocate').then((res) => {
     console.log("res.data.data")
-    console.log(res.data.data[0])
-    dataSource.value = [res.data.data[0]]
+    console.log(res.data.data)
+    if (res.data.data === null) dataSource.value = []
+    else dataSource.value = [res.data.data[0]]
   })
 }
 onMounted(()=>{
